@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -50,19 +51,23 @@ public class ProductListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
-        if (convertView.getTag() != null) {
+        if (convertView != null) {
             holder = (ViewHolder)convertView.getTag();
         } else {
             holder = new ViewHolder();
             inflater = LayoutInflater.from(mContext);
-            convertView = inflater.inflate(R.layout.product_item, parent);
+            convertView = inflater.inflate(R.layout.product_item, null);
+            holder.mainImage = (ImageView) convertView.findViewById(R.id.mainImage);
+            holder.productNameText = (TextView)convertView.findViewById(R.id.productName);
+            holder.productPriceText = (TextView)convertView.findViewById(R.id.productPrice);
+
             convertView.setTag(holder);
         }
 
         Product product = products.get(position);
         holder.productNameText.setText(product.getName());
         holder.productPriceText.setText(product.getPrice());
-        holder.mainImage.setImageBitmap(ImageLoader.getInstance().loadImageSync(product.getMainImage()));
+        ImageLoader.getInstance().displayImage(product.getMainImage(), holder.mainImage, DisplayImageOptions.createSimple());
         return convertView;
     }
 
