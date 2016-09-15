@@ -20,8 +20,12 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile project(path: ':library')
+    compile files('libs/android-async-http-1.4.9.jar')
+    // https://mvnrepository.com/artifact/cz.msebera.android/httpclient
+    compile 'cz.msebera.android:httpclient:4.3.6'
+    compile 'com.google.code.gson:gson:2.7'
 }

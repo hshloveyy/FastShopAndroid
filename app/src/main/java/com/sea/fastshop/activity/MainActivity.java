@@ -1,4 +1,4 @@
-package com.sea.fastshop;
+package com.sea.fastshop.activity;
 
 
 
@@ -11,6 +11,11 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.sea.fastshop.R;
+import com.sea.fastshop.fragment.IWantKnowFragment;
+import com.sea.fastshop.fragment.MeFragment;
+import com.sea.fastshop.fragment.ZhidaoFragment;
 
 /**
  * 主Activity
@@ -34,7 +39,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(com.sea.fastshopandroid.R.layout.activity_main);
+		setContentView(R.layout.activity_main);
 
 		initUI();
 		initTab();
@@ -44,19 +49,19 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	 * 初始化UI
 	 */
 	private void initUI() {
-		knowLayout = (RelativeLayout) findViewById(com.sea.fastshopandroid.R.id.rl_know);
-		iWantKnowLayout = (RelativeLayout) findViewById(com.sea.fastshopandroid.R.id.rl_want_know);
-		meLayout = (RelativeLayout) findViewById(com.sea.fastshopandroid.R.id.rl_me);
+		knowLayout = (RelativeLayout) findViewById(R.id.rl_know);
+		iWantKnowLayout = (RelativeLayout) findViewById(R.id.rl_want_know);
+		meLayout = (RelativeLayout) findViewById(R.id.rl_me);
 		knowLayout.setOnClickListener(this);
 		iWantKnowLayout.setOnClickListener(this);
 		meLayout.setOnClickListener(this);
 
-		knowImg = (ImageView) findViewById(com.sea.fastshopandroid.R.id.iv_know);
-		iWantKnowImg = (ImageView) findViewById(com.sea.fastshopandroid.R.id.iv_i_want_know);
-		meImg = (ImageView) findViewById(com.sea.fastshopandroid.R.id.iv_me);
-		knowTv = (TextView) findViewById(com.sea.fastshopandroid.R.id.tv_know);
-		iWantKnowTv = (TextView) findViewById(com.sea.fastshopandroid.R.id.tv_i_want_know);
-		meTv = (TextView) findViewById(com.sea.fastshopandroid.R.id.tv_me);
+		knowImg = (ImageView) findViewById(R.id.iv_know);
+		iWantKnowImg = (ImageView) findViewById(R.id.iv_i_want_know);
+		meImg = (ImageView) findViewById(R.id.iv_me);
+		knowTv = (TextView) findViewById(R.id.tv_know);
+		iWantKnowTv = (TextView) findViewById(R.id.tv_i_want_know);
+		meTv = (TextView) findViewById(R.id.tv_me);
 
 	}
 
@@ -71,19 +76,19 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		if (!knowFragment.isAdded()) {
 			// 提交事务
 			getSupportFragmentManager().beginTransaction()
-					.add(com.sea.fastshopandroid.R.id.content_layout, knowFragment).commit();
+					.add(R.id.content_layout, knowFragment).commit();
 
 			// 记录当前Fragment
 			currentFragment = knowFragment;
 			// 设置图片文本的变化
-			knowImg.setImageResource(com.sea.fastshopandroid.R.drawable.btn_know_pre);
+			knowImg.setImageResource(R.drawable.btn_know_pre);
 			knowTv.setTextColor(getResources()
-					.getColor(com.sea.fastshopandroid.R.color.bottomtab_press));
-			iWantKnowImg.setImageResource(com.sea.fastshopandroid.R.drawable.btn_wantknow_nor);
+					.getColor(R.color.bottomtab_press));
+			iWantKnowImg.setImageResource(R.drawable.btn_wantknow_nor);
 			iWantKnowTv.setTextColor(getResources().getColor(
-					com.sea.fastshopandroid.R.color.bottomtab_normal));
-			meImg.setImageResource(com.sea.fastshopandroid.R.drawable.btn_my_nor);
-			meTv.setTextColor(getResources().getColor(com.sea.fastshopandroid.R.color.bottomtab_normal));
+					R.color.bottomtab_normal));
+			meImg.setImageResource(R.drawable.btn_my_nor);
+			meTv.setTextColor(getResources().getColor(R.color.bottomtab_normal));
 
 		}
 
@@ -92,13 +97,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
-		case com.sea.fastshopandroid.R.id.rl_know: // 知道
+		case R.id.rl_know: // 知道
 			clickTab1Layout();
 			break;
-		case com.sea.fastshopandroid.R.id.rl_want_know: // 我想知道
+		case R.id.rl_want_know: // 我想知道
 			clickTab2Layout();
 			break;
-		case com.sea.fastshopandroid.R.id.rl_me: // 我的
+		case R.id.rl_me: // 我的
 			clickTab3Layout();
 			break;
 		default:
@@ -116,13 +121,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		addOrShowFragment(getSupportFragmentManager().beginTransaction(), knowFragment);
 		
 		// 设置底部tab变化
-		knowImg.setImageResource(com.sea.fastshopandroid.R.drawable.btn_know_pre);
-		knowTv.setTextColor(getResources().getColor(com.sea.fastshopandroid.R.color.bottomtab_press));
-		iWantKnowImg.setImageResource(com.sea.fastshopandroid.R.drawable.btn_wantknow_nor);
+		knowImg.setImageResource(R.drawable.btn_know_pre);
+		knowTv.setTextColor(getResources().getColor(R.color.bottomtab_press));
+		iWantKnowImg.setImageResource(R.drawable.btn_wantknow_nor);
 		iWantKnowTv.setTextColor(getResources().getColor(
-				com.sea.fastshopandroid.R.color.bottomtab_normal));
-		meImg.setImageResource(com.sea.fastshopandroid.R.drawable.btn_my_nor);
-		meTv.setTextColor(getResources().getColor(com.sea.fastshopandroid.R.color.bottomtab_normal));
+				R.color.bottomtab_normal));
+		meImg.setImageResource(R.drawable.btn_my_nor);
+		meTv.setTextColor(getResources().getColor(R.color.bottomtab_normal));
 	}
 
 	/**
@@ -134,13 +139,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		}
 		addOrShowFragment(getSupportFragmentManager().beginTransaction(), iWantKnowFragment);
 		
-		knowImg.setImageResource(com.sea.fastshopandroid.R.drawable.btn_know_nor);
-		knowTv.setTextColor(getResources().getColor(com.sea.fastshopandroid.R.color.bottomtab_normal));
-		iWantKnowImg.setImageResource(com.sea.fastshopandroid.R.drawable.btn_wantknow_pre);
+		knowImg.setImageResource(R.drawable.btn_know_nor);
+		knowTv.setTextColor(getResources().getColor(R.color.bottomtab_normal));
+		iWantKnowImg.setImageResource(R.drawable.btn_wantknow_pre);
 		iWantKnowTv.setTextColor(getResources().getColor(
-				com.sea.fastshopandroid.R.color.bottomtab_press));
-		meImg.setImageResource(com.sea.fastshopandroid.R.drawable.btn_my_nor);
-		meTv.setTextColor(getResources().getColor(com.sea.fastshopandroid.R.color.bottomtab_normal));
+				R.color.bottomtab_press));
+		meImg.setImageResource(R.drawable.btn_my_nor);
+		meTv.setTextColor(getResources().getColor(R.color.bottomtab_normal));
 
 	}
 
@@ -153,13 +158,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		}
 		
 		addOrShowFragment(getSupportFragmentManager().beginTransaction(), meFragment);
-		knowImg.setImageResource(com.sea.fastshopandroid.R.drawable.btn_know_nor);
-		knowTv.setTextColor(getResources().getColor(com.sea.fastshopandroid.R.color.bottomtab_normal));
-		iWantKnowImg.setImageResource(com.sea.fastshopandroid.R.drawable.btn_wantknow_nor);
+		knowImg.setImageResource(R.drawable.btn_know_nor);
+		knowTv.setTextColor(getResources().getColor(R.color.bottomtab_normal));
+		iWantKnowImg.setImageResource(R.drawable.btn_wantknow_nor);
 		iWantKnowTv.setTextColor(getResources().getColor(
-				com.sea.fastshopandroid.R.color.bottomtab_normal));
-		meImg.setImageResource(com.sea.fastshopandroid.R.drawable.btn_my_pre);
-		meTv.setTextColor(getResources().getColor(com.sea.fastshopandroid.R.color.bottomtab_press));
+				R.color.bottomtab_normal));
+		meImg.setImageResource(R.drawable.btn_my_pre);
+		meTv.setTextColor(getResources().getColor(R.color.bottomtab_press));
 		
 	}
 
@@ -176,7 +181,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
 		if (!fragment.isAdded()) { // 如果当前fragment未被添加，则添加到Fragment管理器中
 			transaction.hide(currentFragment)
-					.add(com.sea.fastshopandroid.R.id.content_layout, fragment).commit();
+					.add(R.id.content_layout, fragment).commit();
 		} else {
 			transaction.hide(currentFragment).show(fragment).commit();
 		}
