@@ -4,6 +4,8 @@ package com.sea.fastshop.fragment;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Process;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -56,6 +58,14 @@ public class ZhidaoFragment extends Fragment {
     private int pageNum = 1;
     private int pageSize = 10;
 
+//    private Handler mHandler = new Handler(){
+//        @Override
+//        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+//            mPullToRefreshListView.onRefreshComplete();
+//        }
+//    };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +84,6 @@ public class ZhidaoFragment extends Fragment {
 
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-                mPullToRefreshListView.onRefreshComplete();
                 getProductList();
             }
         });
@@ -96,6 +105,7 @@ public class ZhidaoFragment extends Fragment {
             public void onStart() {
                 super.onStart();
                 pd.show();
+                Log.d(TAG, "onStart: 下拉开始");
             }
 
             @Override
@@ -108,8 +118,12 @@ public class ZhidaoFragment extends Fragment {
                         productListAdapter.notifyDataSetChanged();
                         pageNum++;
                     }
+//                    mHandler.sendEmptyMessage(0);
                 } catch (JSONException e) {
                     Log.e(TAG, "onSuccess: " + e.getMessage());
+                } finally {
+                    pd.dismiss();
+                    mPullToRefreshListView.onRefreshComplete();
                 }
             }
 
@@ -117,13 +131,13 @@ public class ZhidaoFragment extends Fragment {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
                 Toast.makeText(activity, "请求失败", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onFailure: 请求失败");
             }
 
             @Override
             public void onFinish() {
                 super.onFinish();
-                pd.dismiss();
-                mPullToRefreshListView.onRefreshComplete();
+                Log.d(TAG, "onFinish: 下拉结束");
             }
         });
     }
