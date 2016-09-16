@@ -32,6 +32,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,13 +50,12 @@ public class ZhidaoFragment extends Fragment {
     private Activity activity;
     private PullToRefreshListView mPullToRefreshListView;
 
-    private String[] dataList = {
-            "10", "9", "8", "7", "6", "5", "4", "3", "2", "1"};
-
-    private List<Product> products = null;
+    private List<Product> products = new ArrayList<Product>();
     private ListView listView;
     private ProductListAdapter productListAdapter;
-    private int i = 11;
+    private int pageNum = 1;
+    private int pageSize = 10;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,9 +75,11 @@ public class ZhidaoFragment extends Fragment {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
                 mPullToRefreshListView.onRefreshComplete();
+                getProductList();
             }
         });
-
+        productListAdapter = new ProductListAdapter(activity, products);
+        listView.setAdapter(productListAdapter);
         getProductList();
         return view;
     }
@@ -85,7 +87,11 @@ public class ZhidaoFragment extends Fragment {
     private void getProductList() {
         final  ProgressDialog pd = new ProgressDialog(activity);
         pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        HttpUtils.get("product/queryProduct.do", new RequestParams(new HashMap<String, String>()), new JsonHttpResponseHandler("utf-8"){
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("pageNum", pageNum + "");
+        params.put("pageSize", pageSize+ "");
+        HttpUtils.get("product/queryProduct.do", new RequestParams(params), new JsonHttpResponseHandler("utf-8"){
             @Override
             public void onStart() {
                 super.onStart();
@@ -98,14 +104,12 @@ public class ZhidaoFragment extends Fragment {
                 try {
                     if(HttpUtils.SUCCESS_CODE.equals(response.getString("code"))){
                         Type objectType = new TypeToken<List<Product>>() {}.getType();
-                        products = new Gson().fromJson(response.getString("data"), objectType);
-                        productListAdapter = new ProductListAdapter(activity, products);
-                        listView.setAdapter(productListAdapter);
+                        products.addAll(0, (Collection<? extends Product>) new Gson().fromJson(response.getString("data"), objectType));
+                        productListAdapter.notifyDataSetChanged();
+                        pageNum++;
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, "onSuccess: " + e.getMessage());
-                }finally {
-                    pd.dismiss();
                 }
             }
 
@@ -119,6 +123,7 @@ public class ZhidaoFragment extends Fragment {
             public void onFinish() {
                 super.onFinish();
                 pd.dismiss();
+                mPullToRefreshListView.onRefreshComplete();
             }
         });
     }

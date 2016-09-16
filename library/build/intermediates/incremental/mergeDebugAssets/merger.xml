@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="F:\FastShopAndroid\library\src\main\assets"/><source path="F:\FastShopAndroid\library\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="F:\FastShopAndroid\library\src\debug\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="D:\GitRepository\FastShopAndroid\library\src\main\assets"/><source path="D:\GitRepository\FastShopAndroid\library\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="D:\GitRepository\FastShopAndroid\library\src\debug\assets"/></dataSet></merger>

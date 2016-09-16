@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.sea.fastshop.R;
 import com.sea.fastshop.entity.Product;
@@ -67,7 +68,7 @@ public class ProductListAdapter extends BaseAdapter {
         Product product = products.get(position);
         holder.productNameText.setText(product.getName());
         holder.productPriceText.setText(product.getPrice());
-        ImageLoader.getInstance().displayImage(product.getMainImage(), holder.mainImage, DisplayImageOptions.createSimple());
+        ImageLoader.getInstance().displayImage(product.getMainImage(), holder.mainImage, new ImageSize(100, 100));
         return convertView;
     }
 

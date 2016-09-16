@@ -8,7 +8,7 @@ import com.loopj.android.http.RequestParams;
  * Created by Administrator on 2016/9/14.
  */
 public class HttpUtils {
-    private static final String BASE_URL = "http://192.168.3.100:9080/FastShop/";
+    private static final String BASE_URL = "http://192.168.3.103:8080/FastShop/";
     public static final String SUCCESS_CODE = "0000";
 
     private static AsyncHttpClient client = new AsyncHttpClient();
