@@ -84,12 +84,12 @@ public class ZhidaoFragment extends Fragment {
 
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-                getProductList();
+//                getProductList();
             }
         });
-        productListAdapter = new ProductListAdapter(activity, products);
-        listView.setAdapter(productListAdapter);
-        getProductList();
+//        productListAdapter = new ProductListAdapter(activity, products);
+//        listView.setAdapter(productListAdapter);
+//        getProductList();
         return view;
     }
 
