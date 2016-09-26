@@ -4,23 +4,30 @@ package com.sea.fastshop.fragment;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.os.Process;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.alibaba.baichuan.android.trade.AlibcTrade;
+import com.alibaba.baichuan.android.trade.callback.AlibcTradeCallback;
+import com.alibaba.baichuan.android.trade.constants.AlibcConstants;
+import com.alibaba.baichuan.android.trade.model.AlibcShowParams;
+import com.alibaba.baichuan.android.trade.model.OpenType;
+import com.alibaba.baichuan.android.trade.model.TradeResult;
+import com.alibaba.baichuan.android.trade.page.AlibcAddCartPage;
+import com.alibaba.baichuan.android.trade.page.AlibcBasePage;
+import com.alibaba.baichuan.android.trade.page.AlibcDetailPage;
+import com.alibaba.baichuan.android.trade.page.AlibcMyCartsPage;
+import com.alibaba.baichuan.android.trade.page.AlibcMyOrdersPage;
+import com.alibaba.baichuan.android.trade.page.AlibcPage;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.sea.fastshop.R;
@@ -28,7 +35,6 @@ import com.sea.fastshop.adapter.ProductListAdapter;
 import com.sea.fastshop.entity.Product;
 import com.sea.fastshop.utils.HttpUtils;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -90,6 +96,62 @@ public class ZhidaoFragment extends Fragment {
 //        productListAdapter = new ProductListAdapter(activity, products);
 //        listView.setAdapter(productListAdapter);
 //        getProductList();
+
+        //提供给三方传递配置参数
+        Map<String, String> exParams = new HashMap<>();
+        exParams.put(AlibcConstants.ISV_CODE, "appisvcode");
+
+        //商品详情page
+        AlibcBasePage detailPage = new AlibcDetailPage("1111111");
+
+        //实例化店铺打开page
+//        AlibcBasePage shopPage = new AlibcShopPage(shopId);
+
+        //实例化添加购物车打开page
+//        AlibcBasePage addCardPage = new AlibcAddCartPage(itemId)
+
+        //实例化我的订单打开page
+//        AlibcBasePage ordersPage = new AlibcMyOrdersPage(status, allOrder);
+
+        //实例化我的购物车打开page
+//        AlibcBasePage myCartsPage = new AlibcMyCartsPage();
+
+        //实例化URL打开page
+//        AlibcBasePage page = new AlibcPage(taokeUrl);
+
+        //设置页面打开方式
+        AlibcShowParams showParams = new AlibcShowParams(OpenType.Native, false);
+
+        //使用百川sdk提供默认的Activity打开detail
+        AlibcTrade.show(activity, detailPage, showParams, null, exParams,
+                new AlibcTradeCallback() {
+                    @Override
+                    public void onTradeSuccess(TradeResult tradeResult) {
+                        //打开电商组件，用户操作中成功信息回调。tradeResult：成功信息（结果类型：加购，支付；支付结果）
+                        Log.d(TAG, "onTradeSuccess: " + tradeResult.toString());
+                    }
+
+                    @Override
+                    public void onFailure(int code, String msg) {
+                        //打开电商组件，用户操作中错误信息回调。code：错误码；msg：错误信息
+                        Log.e(TAG, "onFailure: " + msg);
+                    }
+                });
+
+        //使用自己的Activity & webview打开detail
+//        AlibcTrade.show(activity, webView, webViewClient, webChromeClien, tdetailPage, showParams, null, exParams,
+//                new AlibcTradeCallback() {
+//                    @Override
+//                    public void onTradeSuccess(TradeResult tradeResult) {
+//                        //打开电商组件，用户操作中成功信息回调。tradeResult：成功信息（结果类型：加购，支付；支付结果）
+//                    }
+//
+//                    @Override
+//                    public void onFailure(int code, String msg) {
+//                        //打开电商组件，用户操作中错误信息回调。code：错误码；msg：错误信息
+//                    }
+//                });
+
         return view;
     }
 
